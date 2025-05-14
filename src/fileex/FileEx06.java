@@ -7,6 +7,7 @@ import java.util.Date;
 public class FileEx06 {
 
 	public static void main(String[] args) {
+		//currDir, dir -> "C:\ijwork\first"
 		String currDir = System.getProperty("user.dir");
 		File dir = new File(currDir);
 		File[] files = dir.listFiles();
@@ -29,6 +30,7 @@ public class FileEx06 {
 
 			System.out.printf(
 					"최종 수정일: %s , 파일속성: %3s , 용량: %6s바이트, 파일명: %s\n",
+					//lastModified -> 파일이나 리소스의 마지막 수정 시간을 나타내는 속성이나 메서드
 					df.format( new Date( f.lastModified() ) ), attribute, size, name
 			);
 		} //for문 종료 중괄호

@@ -12,6 +12,7 @@ public class FileEx07 {
 		//ANSI계열 인코딩 유형 - ms949 : 확장완성형
 		//한글 깨짐의 보완하려면 ms949를 사용하는 것이 좋다.
 		//unicode 기반의 인코딩 유형 - utf-8 : 조합형
+		//OutputStreamWriter = 보조스트림 => 바이트 코드를 문자스트림 코드로 바꿔주는 역할
 		OutputStreamWriter osw1 = new OutputStreamWriter(fos1, "utf-8");
 		OutputStreamWriter osw2 = new OutputStreamWriter(fos2, "ms949"); 
 
@@ -20,7 +21,7 @@ public class FileEx07 {
 		System.out.println(
 				"아무 내용이나 입력하세요. "
 				+ "꼭 엔터를 해 주어야만 글이 입력됩니다."
-				+ "\n종료를 원하시면 ctrl + z를 눌러주세요"
+				+ "\n종료를 원하시면 (이클립스: ctrl + z)(인텔리제이: Ctrl + d)를 눌러주세요"
 		);
 
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -51,7 +52,6 @@ public class FileEx07 {
 		isr.close();
 		fis.close();
 	}
-
 }
 
 

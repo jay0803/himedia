@@ -8,7 +8,7 @@ public class FileCopyTest {
 	public static void main(String[] args) {
 		long millisecond = 0;
 		try{
-			FileInputStream fis = new FileInputStream("C:/jwork/First/src/fileex/Exam/file.zip");
+			FileInputStream fis = new FileInputStream("C:/ijwork/first/src/fileex/Exam/file.zip");
 			FileOutputStream fos = new FileOutputStream("copy.zip");
 			millisecond = System.currentTimeMillis(); //시스템의 현재 시간을 긴정수값으로 표현해주는 기능
 			int i;
@@ -25,5 +25,3 @@ public class FileCopyTest {
 		System.out.println("파일 복사 하는 데 " + millisecond + " milliseconds 소요되었습니다.");
 	}
 }
-
-
