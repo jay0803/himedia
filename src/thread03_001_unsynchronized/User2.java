@@ -1,5 +1,5 @@
 package thread03_001_unsynchronized;
-
+//&20
 public class User2 extends Thread {	
 	private Calculator calculator;
 	
@@ -7,7 +7,6 @@ public class User2 extends Thread {
 		this.setName("User2");
 		this.calculator = calculator;
 	}
-	
 	public void run() {
 		calculator.setMemory(50);
 	}

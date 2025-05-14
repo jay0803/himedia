@@ -1,8 +1,8 @@
 package thread03_001_unsynchronized;
 
+//&10
 public class Calculator {
 	private int memory;
-
 	public int getMemory() {
 		return memory;
 	}

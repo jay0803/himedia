@@ -7,12 +7,12 @@ public class BeepPrintExample2 {
 		Thread thread1 = new Thread(beepTask);
 		thread1.start();
 
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<3; i++) {
 			System.out.println("하");
 			try { Thread.sleep(500); } catch(Exception e) {}
 		}
 
-
+		System.out.println("\n");
 		//Thread를 상속받은 하위클래스로 객체를 생성하면 
 		//Runnable객체를 구현하지 않아도 스레드 작업이 가능하다.
 		Thread thread2 = new BeepThread();

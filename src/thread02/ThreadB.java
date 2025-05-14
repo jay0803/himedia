@@ -8,6 +8,7 @@ public class ThreadB extends Thread {
 			System.out.println(getName() + "가 출력한 내용");
 			System.out.println(getName() + "가 출력한 내용");
 			System.out.println(getName() + "가 출력한 내용");
+			System.out.println("\n");
 		}
 	}
 }

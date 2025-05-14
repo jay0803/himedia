@@ -11,6 +11,5 @@ public class MainThreadExample {
 		User1 user1 = new User1();
 		user1.setCalculator(calculator);
 		user1.start();
-
 	}
 }
