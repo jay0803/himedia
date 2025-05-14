@@ -2,12 +2,10 @@ package thread03_002_synchronized;
 
 public class Calculator {
 	private int memory;
-
 	public int getMemory() {
 		return memory;
 	}
-
-	public synchronized void setMemory(int memory) {
+	public synchronized void setMemory(int memory) { //동기화
 		this.memory = memory;
 		try {
 			Thread.sleep(2000);
