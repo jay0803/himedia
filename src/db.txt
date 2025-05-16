@@ -1,0 +1,93 @@
+SELECT *
+FROM hi.emp
+WHERE deptno=10
+
+SELECT ename,job,deptno
+FROM hi.emp
+WHERE deptno=10 AND Job='CLERK'
+
+SELECT EMPNO,ENAME,JOB,DEPTNO
+FROM hi.emp
+WHERE SAL>=2000
+
+SELECT EMPNO,ENAME,SAL
+FROM hi.emp
+WHERE SAL>=500 AND SAL<=4000
+
+SELECT ename,hiredate
+FROM hi.emp
+WHERE hiredate>='1982-01-01' AND hiredate<='1987-12-31'
+
+SELECT ename,hiredate
+FROM hi.emp
+WHERE hiredate BETWEEN '1982-01-01' AND '1987-12-31'
+
+SELECT empno,ename,comm
+FROM hi.emp
+WHERE comm=300 OR comm=500 OR comm=1400;
+
+SELECT empno,ename,comm
+FROM hi.emp
+WHERE comm IN (300,500,1400)
+
+SELECT empno,ename,comm
+FROM hi.emp
+WHERE comm NOT IN (300,500,1400) OR COMM IS NULL
+
+SELECT empno,ename,MGR
+FROM hi.emp
+WHERE MGR IS NULL;
+
+SELECT EMPNO,ENAME
+FROM hi.emp
+WHERE ENAME LIKE 'J%';
+
+SELECT EMPNO,ENAME
+FROM hi.emp
+WHERE ENAME LIKE '%N';
+
+SELECT EMPNO,ENAME
+FROM hi.emp
+WHERE ENAME LIKE '%A%';
+
+SELECT EMPNO,ENAME
+FROM hi.emp
+WHERE ENAME LIKE '_A%';
+
+SELECT EMPNO,ENAME
+FROM hi.emp
+WHERE ENAME LIKE '_L_R%';
+
+SELECT ENAME 이름, DEPTNO 부서번호,EMPNO 사번
+FROM hi.emp
+
+SELECT ENAME 이름, DEPTNO "부서 번호",EMPNO 사번 //공백
+FROM hi.emp
+
+SELECT ENAME 이름, DEPTNO "부서 번호",EMPNO 사번, SAL*12 "연봉", SAL "급여"
+FROM hi.emp
+
+SELECT ENAME 이름, DEPTNO "Department Number",EMPNO 사번, SAL*12 "연봉", SAL "급여"
+FROM hi.emp
+
+SELECT ENAME, 'IS A' ,JOB
+FROM hi.emp
+WHERE EMPNO=7788;
+
+SELECT *
+FROM `hi`.`emp`
+WHERE DEPTNO = 30
+ORDER BY `DEPTNO` DESC
+
+SELECT *
+FROM emp
+WHERE DEPTNO = 30
+ORDER BY MGR, ENAME DESC
+
+SELECT empno, ename, sal
+FROM emp
+ORDER BY sal asc
+
+SELECT ENAME, SAL
+FROM emp
+ORDER BY SAL, ENAME DESC;
