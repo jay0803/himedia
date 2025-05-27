@@ -1,62 +1,98 @@
 package thread04;
+class StaticIns{
+	public void prt(String nm){
+		System.out.println(nm+"에서 공유객체 메소드 실행");
+	}
+}
 
+//조건: wait() / notify()는 반드시 synchronized (객체) 블록 안에서만 사용 가능
 public class ThreadWait {
-
 	public static void main(String[] args) {
-		// 해당 thread가 실행되면, 해당 thread는 run메서드 안에서 자신의 모니터링 락을 획득
-		ThreadBB b = new ThreadBB();
-		b.start();
+		// 자바 객체들은 모두 자기만의 열쇠(lock)를 가지고 있음.
+		// 스레드 객체 또한 thread가 생성되면
+		// 해당 thread는 run메서드 안에서 자신의 모니터링 락을 획득
+		StaticIns lock = new StaticIns(); // 공유 객체
 
-		// b에 대하여 동기화 블럭을 설정
-		// 만약 메인 thread가 아래의 블록을 위의 Thread보다 먼저 실행되었다면 대기를 하게 되면서 
-		// 모니터링 락을 놓고 대기
-		System.out.println("메인스레드 중간");
-		
-		// 메인 thread는 정지
-		// ThreadB가 5번 값을 더한 후 notify를 호출하게 되면 대기에서 깨어남
-		synchronized (b) {
-			System.out.println("synchronized메인 블록 시작");
+		ThreadA a = new ThreadA(lock);
+		ThreadB b = new ThreadB(lock);
+
+		a.start();
+		System.out.println("a스레드 이어서 실행");
+		b.start();
+		System.out.println("b스레드 이어서 실행");
+		System.out.println("main스레드 이어서 실행");
+
+//		synchronized블록 :한 객체(공유객체)에 대해 한 번에 하나의 스레드만 접근하게 함 (lock 개념)
+		synchronized (lock) {
+//			synchronized블록안에 들어오면 lock객체에 대해 모니터링 락을 가짐.
+//			다른 스레드는 이 블록에 들어오지 못하게 됨
+			System.out.println("Main스레드 wait() 호출로 대기 중...");
 			try {
-				System.out.println("b 종료까지 대기");
-			} catch (Exception e) {
+				System.out.println("Main스레드 lock전");
+//				wait(): 현재 스레드를 해당 객체(공유객체)에 대해 대기 상태로 만듦
+//				(다른 스레드가 notify할 때까지)
+				lock.wait(); // 다른 스레드가 notify() 할 때까지 대기
+				lock.prt("Main");
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-			// 깨어난 후 결과를 출력
-			System.out.println("total : " + b.total);
-		} //synchronized블록 종료 중괄호
-	} //main 메소드 종료 중괄호
-}//main클래스 종료 중괄호
+			System.out.println("Main스레드: notify로 깨워짐! 작업 재개.");
+		}
 
+	}
+}
 
-class ThreadBB extends Thread {
-	// 해당 thread가 실행되면 자기 자신의 모니터링 락을 획득
-	// 5번 반복하면서 1초씩 쉬면서 total에 값을 누적
-	// 그후에 notify()메소드를 호출하여 대기하고 있는 thread를 깨움
+// a스레드는 run() 시작하자마자 wait()로 대기함
+class ThreadA extends Thread {
+	private final StaticIns lock;
+
+	public ThreadA(StaticIns lock) {
+		this.lock = lock;
+	}
+
+	public void run() {
+		synchronized (lock) {
+			System.out.println("ThreadA: wait() 호출로 대기 중...");
+			try {
+				System.out.println("ThreadA객체의 run메소드 진입. lock전");
+				lock.wait(); // 다른 스레드가 notify() 할 때까지 대기
+				lock.prt("ThreadA");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println("ThreadA: notify로 깨워짐! 작업 재개.");
+//			notify(); 는 반드시 synchronized블록에서만 사용가능하다.
+			lock.notify(); // 대기 중인 다른 스레드를 깨움
+		}
+	}
+}
+
+// ThreadB는 시간이 걸리는 작업을 마친 뒤 notify()로 ThreadA를 깨움
+class ThreadB extends Thread {
+	private final StaticIns lock;
 	int total;
 
-	@Override
+	public ThreadB(StaticIns lock) {
+		this.lock = lock;
+	}
+
 	public void run() {
-		synchronized (this) {
+		synchronized (lock) {
+			lock.prt("ThreadB");
 			for (int i = 0; i < 5; i++) {
-				System.out.println("ThreadBB : " + i);
+				System.out.println("ThreadB : " + i);
 				total += i;
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(1000); // 작업 중
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			notify();
+			System.out.println("ThreadB: 작업 완료 후 notify 호출!");
+			lock.notify(); // 대기 중인 다른 스레드 한 개를 깨움
+//			lock.notifyAll(); // 대기 중인 다른 모든 스레드를 깨움
 		}
-		
-		System.out.println("BB종료");
-		System.out.println("BB종료");
-		System.out.println("BB종료");
-		System.out.println("BB종료");
+
+		System.out.println("ThreadB: 종료");
 	}
 }
-
-
-
-
