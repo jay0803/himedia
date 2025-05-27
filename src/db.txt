@@ -1,3 +1,4 @@
+--DML
 SELECT *
 FROM hi.emp
 WHERE deptno=10
@@ -91,3 +92,13 @@ ORDER BY sal asc
 SELECT ENAME, SAL
 FROM emp
 ORDER BY SAL, ENAME DESC;
+
+--DDL
+CREATE TABLE student(
+	id INT NOT NULL,
+	NAME VARCHAR(10) NOT NULL,
+	gender ENUM('남자','여자') NOT NULL,
+	address VARCHAR(50) NOT NULL,
+	birthday DATE NOT NULL,
+	PRIMARY KEY (id)
+) DEFAULT CHARSET UTF8;
